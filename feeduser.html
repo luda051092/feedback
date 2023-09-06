@@ -1,0 +1,37 @@
+{% extends 'feedbase.html' %}
+
+{% block content %}
+<h1>{{user.full_name}}</h1>
+
+<div>
+    <p>Username: {{user.username}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>
+        <form style="display: inline;" action="/users/{{user.username}}/delete" method="POST" class="form-inline">
+            <a href="/users/{{user.username}}/feedback/add" class="btn btn-success">Give feedback</a>
+            <button class="btn btn-danger">Delete your account</button>
+        </form>
+    </p>
+</div>
+<h1>Feedback</h1>
+<div>
+    {% for feedback in user.feedbacks %}
+    <div class="card my-4">
+        <div class="card-body">
+            <h5 class="card-title text-info">
+                <a href="/feedback/{{feedback.id}}/update" class="btn btn-sm btn-primary"><i class="fas fa edit"></i></a>
+                <form style="display: inline;" action="/feedback/{{feedback.id}}/delete" method="POST">
+                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                </form>
+            </h5>
+            <h2 class="card-title text-info">{{feedback.title}}</h2>
+            <p class="card-text">
+                {{feedback.content}}
+            </p>
+        </div>
+
+    </div>
+    {% endfor %}    
+
+</div>
+{% endblock %}
